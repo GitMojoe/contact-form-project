@@ -59,8 +59,18 @@
 		setTimeout(function(){
 			document.getElementById('message').classList.add('fadeOutElement');
 			setTimeout(function(){
-				document.getElementById('message').className = 'hide-message';
-				document.getElementById(field.id).focus();
+				if( field != 'success'){
+					document.getElementById('message').className = 'hide-message';
+					document.getElementById(field.id).focus();
+
+				}else{
+					document.getElementById('message').className = 'hide-message';
+					document.getElementById('name').value = '';
+					document.getElementById('email').value = '';
+					document.getElementById('comment').value = '';
+
+				}
+				
 			},2000)
 		},2000);
 	}
@@ -74,7 +84,9 @@
 			const fetchPromise = await fetch(emailFormProcessor, {method: 'POST', body: formdata});
 			const data = await fetchPromise.json();
 			console.log(data.result)
-			
+			if(data.result == 'success'){
+				displayMessage('success', feedBackMessage[3]);
+			}
 		}, 2000)
 
 	
