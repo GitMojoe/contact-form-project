@@ -54,10 +54,30 @@
 	// This displays error / success messages
 	function displayMessage(field, message) {
 		// puts messages in the DOM
+		document.getElementById('message').className='show-message';
+		document.getElementById('message').innerHTML=message;
+		setTimeout(function(){
+			document.getElementById('message').classList.add('fadeOutElement');
+			setTimeout(function(){
+				document.getElementById('message').className = 'hide-message';
+				document.getElementById(field.id).focus();
+			},2000)
+		},2000);
 	}
 
 	function sendData() {
 		// actually sends the data asynchronously
+		document.getElementById('message').className='show-message';
+		document.getElementById('message').innerHTML = feedBackMessage[4];
+		setTimeout(async function(){
+			const formdata = new FormData(contactForm);
+			const fetchPromise = await fetch(emailFormProcessor, {method: 'POST', body: formdata});
+			const data = await fetchPromise.json();
+			console.log(data.result)
+			
+		}, 2000)
+
+	
 	}
 
 }());
